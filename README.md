@@ -126,6 +126,7 @@ Follow the instructions for the platform you're compiling on below.
 For the test suite, additional requirements are:
 * Python3 (3.8 -> )
 * [Ghostscript (10.x ->)](https://www.ghostscript.com/index.html)
+* [Catch2 (3.0 ->)](https://github.com/catchorg/Catch2)
 
 ### Getting the source code
 
@@ -255,7 +256,7 @@ For a 32-bit Windows cross-build, replace 64 with 32 in the above instructions.
 
 We support building OpenSCAD headless for WebAssembly w/ Emscripten, using a premade Docker image built in [openscad/openscad-wasm](https://github.com/openscad/openscad-wasm) (which also has usage examples)
 
-#### Browser
+#### Browser
 
 The following command creates `build-web/openscad.wasm` & `build-web/openscad.js`:
 
