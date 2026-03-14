@@ -1,13 +1,12 @@
-#include "platform/PlatformUtils.h"
-
 #include <filesystem>
 #include <ios>
-#include <string>
 #include <map>
 #include <boost/nowide/convert.hpp>
+#include <string>
 
-#include "utils/printutils.h"
+#include "platform/PlatformUtils.h"
 #include "utils/findversion.h"
+#include "utils/printutils.h"
 #ifndef _WIN32_WINNT
 #define _WIN32_WINNT 0x0501
 #endif
@@ -25,7 +24,10 @@
 
 #include "version.h"
 
-std::string PlatformUtils::pathSeparatorChar() { return ";"; }
+std::string PlatformUtils::pathSeparatorChar()
+{
+  return ";";
+}
 
 // see http://msdn.microsoft.com/en-us/library/windows/desktop/bb762494%28v=vs.85%29.aspx
 static const std::string getFolderPath(int nFolder)
@@ -50,7 +52,10 @@ static const std::string getFolderPath(int nFolder)
   return "";
 }
 
-std::string PlatformUtils::userDocumentsPath() { return documentsPath(); }
+std::string PlatformUtils::userDocumentsPath()
+{
+  return documentsPath();
+}
 
 // retrieve the path to 'My Documents' for the current user under windows
 // In XP this is 'c:\documents and settings\username\my documents'
@@ -75,7 +80,10 @@ std::string PlatformUtils::userConfigPath()
   return retval + std::string("/") + PlatformUtils::OPENSCAD_FOLDER_NAME;
 }
 
-unsigned long PlatformUtils::stackLimit() { return STACK_LIMIT_DEFAULT; }
+unsigned long PlatformUtils::stackLimit()
+{
+  return STACK_LIMIT_DEFAULT;
+}
 
 // NOLINTNEXTLINE(modernize-use-using)
 typedef BOOL(WINAPI *LPFN_ISWOW64PROCESS)(HANDLE, PBOOL);
@@ -169,12 +177,16 @@ const std::string PlatformUtils::sysinfo(bool extended)
 }
 
 #include <io.h>
+
 #include <cstdio>
 
 #ifdef USE_MIMALLOC
 #include <mimalloc.h>
 // mimalloc needs an output handler that references stderr after we mess with it.
-static void mi_output(const char *msg, void *arg) { fputs(msg, stderr); }
+static void mi_output(const char *msg, void *arg)
+{
+  fputs(msg, stderr);
+}
 #endif
 
 // attach to parent console if standard IO handles not available

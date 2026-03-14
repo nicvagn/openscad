@@ -1,4 +1,5 @@
 #include "gui/OpenSCADApp.h"
+
 #include "gui/MainWindow.h"
 #ifdef Q_OS_MACOS
 #include "gui/EventFilter.h"
@@ -8,18 +9,17 @@
 #ifdef ENABLE_CGAL
 #include "geometry/cgal/CGALCache.h"
 #endif
-#include "glview/RenderSettings.h"
-#include "gui/Preferences.h"
-
 #include <QApplication>
 #include <QEvent>
 #include <QObject>
+#include <QProgressDialog>
 #include <QString>
 #include <QStringList>
+#include <boost/foreach.hpp>
 #include <cassert>
 #include <exception>
-#include <QProgressDialog>
-#include <boost/foreach.hpp>
+
+#include "glview/RenderSettings.h"
 
 OpenSCADApp::OpenSCADApp(int& argc, char **argv) : QApplication(argc, argv)
 {
@@ -27,11 +27,15 @@ OpenSCADApp::OpenSCADApp(int& argc, char **argv) : QApplication(argc, argv)
   this->installEventFilter(new SCADEventFilter(this));
 #endif
 
-  connect(GlobalPreferences::inst(), &Preferences::renderBackend3DChanged, this,
-          &OpenSCADApp::setRenderBackend3D);
+  // Note: It may be tempting to add more initialization code here, but keep in mind that this is run as
+  // part of QApplication initialization, so it's usually better to that in the main gui() function after
+  // the OpenSCADApp instance is created.
 }
 
-OpenSCADApp::~OpenSCADApp() { delete this->fontCacheDialog; }
+OpenSCADApp::~OpenSCADApp()
+{
+  delete this->fontCacheDialog;
+}
 
 #include <QMessageBox>
 
